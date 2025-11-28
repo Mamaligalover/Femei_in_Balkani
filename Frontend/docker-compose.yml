@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: balkani-frontend
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    networks:
+      - balkani-network
+
+networks:
+  balkani-network:
+    driver: bridge
