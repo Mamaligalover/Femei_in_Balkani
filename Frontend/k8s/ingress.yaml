@@ -6,13 +6,16 @@ metadata:
   labels:
     app: balkani-frontend
   annotations:
+    # Cert-manager annotations
+    acme.cert-manager.io/http01-edit-in-place: 'true'
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    kubernetes.io/tls-acme: 'true'
+
     # Nginx Ingress Controller annotations
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
-
-    # Cert-manager annotation for automatic SSL certificate
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/proxy-body-size: "20m"
+    nginx.ingress.kubernetes.io/use-regex: 'true'
 
     # Additional security headers
     nginx.ingress.kubernetes.io/configuration-snippet: |
