@@ -1,0 +1,159 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <!-- Header -->
+  <div class="mb-8">
+    <h1 class="text-4xl font-bold text-gray-800 mb-4">Educational Resources</h1>
+    <p class="text-lg text-gray-600">Discover articles, guides, videos and podcasts for professional and personal development</p>
+  </div>
+
+  <!-- Filters -->
+  <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+    <h2 class="text-lg font-semibold text-gray-800 mb-4">Filter resources</h2>
+    <div class="flex flex-wrap gap-3">
+      <button
+        (click)="filterContent('all')"
+        [class.bg-indigo-600]="selectedFilter === 'all'"
+        [class.text-white]="selectedFilter === 'all'"
+        [class.bg-gray-100]="selectedFilter !== 'all'"
+        [class.text-gray-700]="selectedFilter !== 'all'"
+        class="px-4 py-2 rounded-lg font-medium hover:shadow-md transition">
+        All
+      </button>
+      <button
+        (click)="filterContent('article')"
+        [class.bg-indigo-600]="selectedFilter === 'article'"
+        [class.text-white]="selectedFilter === 'article'"
+        [class.bg-gray-100]="selectedFilter !== 'article'"
+        [class.text-gray-700]="selectedFilter !== 'article'"
+        class="px-4 py-2 rounded-lg font-medium hover:shadow-md transition">
+        Articles
+      </button>
+      <button
+        (click)="filterContent('guide')"
+        [class.bg-indigo-600]="selectedFilter === 'guide'"
+        [class.text-white]="selectedFilter === 'guide'"
+        [class.bg-gray-100]="selectedFilter !== 'guide'"
+        [class.text-gray-700]="selectedFilter !== 'guide'"
+        class="px-4 py-2 rounded-lg font-medium hover:shadow-md transition">
+        Guides
+      </button>
+      <button
+        (click)="filterContent('video')"
+        [class.bg-indigo-600]="selectedFilter === 'video'"
+        [class.text-white]="selectedFilter === 'video'"
+        [class.bg-gray-100]="selectedFilter !== 'video'"
+        [class.text-gray-700]="selectedFilter !== 'video'"
+        class="px-4 py-2 rounded-lg font-medium hover:shadow-md transition">
+        Videos
+      </button>
+      <button
+        (click)="filterContent('podcast')"
+        [class.bg-indigo-600]="selectedFilter === 'podcast'"
+        [class.text-white]="selectedFilter === 'podcast'"
+        [class.bg-gray-100]="selectedFilter !== 'podcast'"
+        [class.text-gray-700]="selectedFilter !== 'podcast'"
+        class="px-4 py-2 rounded-lg font-medium hover:shadow-md transition">
+        Podcasts
+      </button>
+    </div>
+  </div>
+
+  <!-- Resources Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div *ngFor="let content of filteredContent" class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden flex flex-col">
+      <!-- Content Image -->
+      <div class="h-48 bg-gradient-to-r from-indigo-500 to-purple-500 relative overflow-hidden">
+        <img
+          *ngIf="content.coverImage"
+          [src]="content.coverImage"
+          [alt]="content.title"
+          class="w-full h-full object-cover">
+        <div class="absolute top-4 left-4">
+          <span class="px-3 py-1 bg-white bg-opacity-90 rounded-full text-xs font-semibold flex items-center gap-1">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" [attr.d]="getContentTypeIcon(content.type)" />
+            </svg>
+            {{ getContentTypeLabel(content.type) }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Content Body -->
+      <div class="p-6 flex-1 flex flex-col">
+        <h3 class="text-xl font-bold text-gray-800 mb-3">{{ content.title }}</h3>
+        <p class="text-gray-600 mb-4 line-clamp-3 flex-1">{{ content.description }}</p>
+
+        <!-- Tags -->
+        <div class="flex flex-wrap gap-2 mb-4">
+          <span
+            *ngFor="let tag of content.tags.slice(0, 3)"
+            class="px-2 py-1 bg-indigo-100 text-indigo-700 rounded text-xs">
+            #{{ tag }}
+          </span>
+          <span *ngIf="content.tags.length > 3" class="px-2 py-1 bg-gray-100 text-gray-500 rounded text-xs">
+            +{{ content.tags.length - 3 }}
+          </span>
+        </div>
+
+        <!-- Stats -->
+        <div class="flex items-center justify-between text-sm text-gray-600 mb-4 pt-4 border-t border-gray-100">
+          <div class="flex items-center">
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+            {{ content.views }}
+          </div>
+          <div class="flex items-center">
+            <svg class="w-4 h-4 mr-1 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+            {{ content.likes }}
+          </div>
+          <div class="text-xs text-gray-500">
+            {{ content.publishedAt | date:'dd MMM yyyy' }}
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex gap-3">
+          <button class="flex-1 bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition font-medium">
+            Read
+          </button>
+          <button
+            (click)="likeContent(content.id)"
+            class="px-4 py-2 border border-indigo-600 text-indigo-600 rounded-lg hover:bg-indigo-50 transition">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Resources Message -->
+  <div *ngIf="filteredContent.length === 0" class="text-center py-12">
+    <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+    </svg>
+    <p class="text-gray-500 text-lg">No resources available for this filter.</p>
+    <button
+      (click)="filterContent('all')"
+      class="mt-4 text-indigo-600 hover:text-indigo-800 font-medium">
+      View all resources →
+    </button>
+  </div>
+
+  <!-- CTA Section -->
+  <div class="mt-12 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg shadow-xl p-8 text-white">
+    <div class="text-center">
+      <h2 class="text-3xl font-bold mb-4">Would you like to contribute resources?</h2>
+      <p class="text-lg mb-6 text-indigo-100">
+        Share your knowledge and help the community grow!
+      </p>
+      <button class="bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold hover:bg-indigo-50 transition">
+        Add Resource
+      </button>
+    </div>
+  </div>
+</div>
