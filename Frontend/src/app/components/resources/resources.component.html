@@ -1,13 +1,13 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
   <!-- Header -->
   <div class="mb-8">
-    <h1 class="text-4xl font-bold text-gray-800 mb-4">Educational Resources</h1>
+    <h1 class="text-4xl font-bold text-gray-900 mb-4">Educational Resources</h1>
     <p class="text-lg text-gray-600">Discover articles, guides, videos and podcasts for professional and personal development</p>
   </div>
 
   <!-- Filters -->
   <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-    <h2 class="text-lg font-semibold text-gray-800 mb-4">Filter resources</h2>
+    <h2 class="text-lg font-semibold text-gray-900 mb-4">Filter resources</h2>
     <div class="flex flex-wrap gap-3">
       <button
         (click)="filterContent('all')"
@@ -61,7 +61,7 @@
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     <div *ngFor="let content of filteredContent" class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden flex flex-col">
       <!-- Content Image -->
-      <div class="h-48 bg-gradient-to-r from-indigo-500 to-purple-500 relative overflow-hidden">
+      <div class="h-48 bg-indigo-600 relative overflow-hidden">
         <img
           *ngIf="content.coverImage"
           [src]="content.coverImage"
@@ -79,7 +79,7 @@
 
       <!-- Content Body -->
       <div class="p-6 flex-1 flex flex-col">
-        <h3 class="text-xl font-bold text-gray-800 mb-3">{{ content.title }}</h3>
+        <h3 class="text-xl font-bold text-gray-900 mb-3">{{ content.title }}</h3>
         <p class="text-gray-600 mb-4 line-clamp-3 flex-1">{{ content.description }}</p>
 
         <!-- Tags -->
@@ -145,7 +145,7 @@
   </div>
 
   <!-- CTA Section -->
-  <div class="mt-12 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg shadow-xl p-8 text-white">
+  <div class="mt-12 bg-indigo-600 rounded-lg shadow-xl p-8 text-white">
     <div class="text-center">
       <h2 class="text-3xl font-bold mb-4">Would you like to contribute resources?</h2>
       <p class="text-lg mb-6 text-indigo-100">

@@ -222,7 +222,7 @@ export class OnboardingComponent implements OnInit {
   }
 
   getProgressPercentage(): number {
-    return (this.currentStep / this.totalSteps) * 100;
+    return Math.round((this.currentStep / this.totalSteps) * 100);
   }
 
   getInterestLabel(interest: InterestDomain): string {
